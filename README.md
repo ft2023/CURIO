@@ -9,7 +9,7 @@
 
 <div align="center">
   <p>
-    <a href="#"><img src="https://img.shields.io/badge/Project-Page_(Coming_Soon)-00d9ff?style=for-the-badge&logo=github&logoColor=white" alt="Project Page"></a>
+    <a href='https://ft2023.github.io/CURIO/'><img src='https://img.shields.io/badge/Project-Page-00d9ff?style=for-the-badge&logo=github&logoColor=white' alt='Project Page'></a>
     <a href="#"><img src="https://img.shields.io/badge/arXiv-Coming_Soon-ff6b6b?style=for-the-badge&logo=arxiv&logoColor=white" alt="arXiv"></a>
     <br>
     <a href="https://github.com/ft2023/CURIO/stargazers"><img src="https://img.shields.io/github/stars/ft2023/CURIO?color=f1e05a&style=for-the-badge&logo=star&logoColor=white" alt="Stars"></a>
