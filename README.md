@@ -266,7 +266,7 @@ For the differences between this training stack and the original TTT-Discover im
 
 ## 🙏 Acknowledgments
 
-CURIO's discovery loop and training stack build on **[nanodiscover](https://github.com/cheongalc/nanodiscover)**, a Tinker-free reimplementation of **[TTT-Discover](https://github.com/test-time-training/discover)** ([paper](https://arxiv.org/abs/2601.16175)). The ICWM architecture and loss follow the Intrinsic Curiosity Module of **[CD-RLHF](https://github.com/ernie-research/CD-RLHF)**, which builds on [Pathak et al. (2017)](https://arxiv.org/abs/1705.05363). Task definitions follow TTT-Discover, [AlphaEvolve](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) and [ThetaEvolve](https://github.com/ypwang61/ThetaEvolve), and the denoising benchmark uses [Open Problems in Single-Cell Analysis](https://openproblems.bio/). We thank all of these authors for releasing their code and benchmarks.
+CURIO is inspired by **[TTT-Discover](https://github.com/test-time-training/discover)**, **[nanodiscover](https://github.com/cheongalc/nanodiscover)**, and **[CD-RLHF](https://github.com/ernie-research/CD-RLHF)**. Task definitions follow TTT-Discover, [AlphaEvolve](https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/) and [ThetaEvolve](https://github.com/ypwang61/ThetaEvolve), and the denoising benchmark uses [Open Problems in Single-Cell Analysis](https://openproblems.bio/). We thank all of these authors for releasing their code and benchmarks.
 
 
 
