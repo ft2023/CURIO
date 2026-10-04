@@ -1,3 +1,9 @@
+<div align="center">
+  <img src="assets/banner.png" alt="CURIO" width="640">
+</div>
+
+
+
 <h1 align="center">CURIO: Curiosity-Driven Test-Time Learning for Open-Ended Discovery</h1>
 
 
