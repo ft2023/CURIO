@@ -228,23 +228,26 @@ section[id] { scroll-margin-top: 3.5rem; }
 /* ---------- Results tables ---------- */
 .table-wrap {
     overflow-x: auto;
+    padding-left: 2px;
+    padding-right: 2px;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 0.25rem;
     margin-top: 1.5rem;
 }
 .results-table {
+    width: 100%;
     margin: 0 auto;
     border-collapse: separate;
     border-spacing: 0;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     background: #fff;
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
 }
 .results-table tr th, .results-table tr td {
-    padding: 8px 14px;
+    padding: 12px 18px;
     text-align: center;
     vertical-align: middle;
     border-bottom: 1px solid #dbdbdb;
@@ -260,7 +263,7 @@ section[id] { scroll-margin-top: 3.5rem; }
     text-transform: uppercase;
     letter-spacing: 0.06em;
 }
-.results-table td.name, .results-table th.name { text-align: left; }
+.results-table td.name, .results-table th.name { text-align: left; padding-left: 24px; }
 .results-table tr .group-start { border-left: 1px solid var(--line); }
 .results-table .group-row td {
     text-align: left;
@@ -270,8 +273,9 @@ section[id] { scroll-margin-top: 3.5rem; }
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: #a0a0a0;
-    padding-top: 0.6rem;
-    padding-bottom: 0.6rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 24px;
 }
 .results-table .row-ours { background-color: var(--accent-soft); }
 .results-table .row-ours td { color: #1c4f9c; }
@@ -347,6 +351,9 @@ section[id] { scroll-margin-top: 3.5rem; }
     }
     .results-table thead .name { background: #f5f5f5; }
     .results-table .row-ours .name { background: var(--accent-soft); }
+    .results-table { font-size: 0.85rem; }
+    .results-table tr th, .results-table tr td { padding: 9px 12px; }
+    .results-table td.name, .results-table th.name, .results-table .group-row td { padding-left: 14px; }
     .content.has-text-justified p { font-size: 1rem; text-align: left; }
 }
 
