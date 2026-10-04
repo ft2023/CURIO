@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CURIO is a curiosity-driven test-time learning framework for open-ended discovery: an Intrinsic Curiosity World Model over the policy's hidden states adds a selective exploration bonus to test-time reinforcement learning.">
+    <meta name="keywords" content="Open-Ended Discovery, Test-Time Training, Curiosity, Reinforcement Learning, LLM, Mathematical Discovery">
+    <title>CURIO: Curiosity-Driven Test-Time Learning</title>
+
+    <meta property="og:title" content="CURIO: Curiosity-Driven Test-Time Learning for Open-Ended Discovery">
+    <meta property="og:description" content="An Intrinsic Curiosity World Model over policy hidden states complements task reward in test-time RL for open-ended discovery.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./static/images/main.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="./static/images/favicon.svg" type="image/svg+xml">
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="./static/js/index.js"></script>
+
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+
+<body>
+    <!-- ==================== HERO ==================== -->
+    <section class="hero">
+        <div class="hero-body" style="padding-bottom: 1rem;">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <img class="hero-banner" src="./static/images/banner.png" alt="CURIO: programs are sampled, a non-obvious branch is explored, candidates are evaluated, and the best solution feeds back into the next round.">
+
+                        <h1 class="title is-1 publication-title">
+                            <span style="font-size: xx-large;">
+                                <span class="method">CURIO</span>: Curiosity-Driven Test-Time Learning for Open-Ended Discovery
+                            </span>
+                        </h1>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">Tao Feng<sup>1</sup></span>
+                            <span class="author-block">Fangxu Yu<sup>2</sup></span>
+                            <span class="author-block">Zijie Lei<sup>1</sup></span>
+                            <span class="author-block">Jiaru Zou<sup>3</sup></span>
+                            <span class="author-block">Changjiang Jiang<sup>1</sup></span>
+                            <span class="author-block">Yi Yan<sup>1</sup></span>
+                            <span class="author-block">Jiaxuan You<sup>1</sup></span>
+                            <span class="author-block">Pan Lu<sup>3</sup></span>
+                        </div>
+
+                        <div class="is-size-6 publication-authors affiliations" style="margin-top: 0.25rem;">
+                            <span class="author-block"><sup>1</sup>University of Illinois Urbana-Champaign</span>
+                            <span class="author-block"><sup>2</sup>University of Maryland, College Park</span>
+                            <span class="author-block"><sup>3</sup>Stanford University</span>
+                        </div>
+
+                        <div class="publication-links">
+                            <span class="link-block">
+                                <a class="button is-normal is-rounded is-dark" disabled title="Coming soon">
+                                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                                    <span>arXiv (Coming Soon)</span>
+                                </a>
+                            </span>
+                            <span class="link-block">
+                                <a href="https://github.com/ft2023/CURIO" class="button is-normal is-rounded is-dark" target="_blank">
+                                    <span class="icon"><i class="fab fa-github"></i></span>
+                                    <span>Code</span>
+                                </a>
+                            </span>
+                        </div>
+
+                        <!-- Headline numbers -->
+                        <div class="stat-ribbon">
+                            <div class="stat-cell">
+                                <div class="stat-num">7</div>
+                                <div class="stat-cap">Discovery Tasks</div>
+                                <div class="stat-foot">Six math problems and single-cell denoising.</div>
+                            </div>
+                            <div class="stat-cell">
+                                <div class="stat-num">8B&ndash;235B</div>
+                                <div class="stat-cap">Qwen3 Backbones</div>
+                                <div class="stat-foot">Gains over task-only RL at every tested scale.</div>
+                            </div>
+                            <div class="stat-cell">
+                                <div class="stat-num">+18.3%</div>
+                                <div class="stat-cap">Hadamard (235B)</div>
+                                <div class="stat-foot">Relative gain over TTT-Discover.</div>
+                            </div>
+                            <div class="stat-cell">
+                                <div class="stat-num">+10.8%</div>
+                                <div class="stat-cap">Denoising Score</div>
+                                <div class="stat-foot">Relative gain on Tabula (8B).</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== STICKY SECTION NAV ==================== -->
+    <nav class="section-nav">
+        <div class="nav-inner">
+            <a href="#abstract">Abstract</a>
+            <a href="#method">Method</a>
+            <a href="#results">Results</a>
+            <a href="#diversity">Diversity</a>
+            <a href="#ablations">Ablations</a>
+            <a href="#code">Code</a>
+            <a href="#BibTeX">BibTeX</a>
+        </div>
+    </nav>
+
+    <!-- ==================== ABSTRACT ==================== -->
+    <section class="section" id="abstract" style="padding-top: 2.5rem;">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <p class="eyebrow">Abstract</p>
+                    <h2 class="title is-3">Learning from Feedback, Without Losing the Urge to Explore</h2>
+                    <div class="content has-text-justified" style="margin-top: 1rem;">
+                        <p>
+                            Open-ended discovery requires learning from repeated attempts while continuing to explore directions whose
+                            value is not yet apparent. Search with a frozen large language model (LLM) can reuse previous solutions in
+                            context, but cannot update the model from its successes and failures on the test problem. Reinforcement
+                            learning (RL) enables such adaptation; however, strongly favoring high-reward trajectories may suppress
+                            low-reward yet potentially promising directions too early.
+                        </p>
+                        <p>
+                            We introduce <strong>CURIO</strong>, a curiosity-driven test-time learning framework that complements task
+                            feedback with an <strong>Intrinsic Curiosity World Model (ICWM)</strong>. The ICWM learns transitions in the
+                            policy's hidden-state representation and supplies prediction-error bonuses at sampled tokens outside the
+                            policy's top-$k$ choices. Epoch normalization and an annealed weight regulate their contribution to the
+                            policy update.
+                        </p>
+                        <p>
+                            On six mathematical discovery tasks and single-cell denoising with Qwen3 backbones from 8B to 235B,
+                            three-run means improve over a matched task-only RL control on five mathematical objectives, match the best
+                            reported performance on Circle Packing, and improve denoising Score and mean squared error (MSE) on both
+                            held-out corpora at every tested scale. Relative gains reach <strong>18.3%</strong> on Hadamard and
+                            <strong>10.8%</strong> on denoising Score. Code-diversity measurements show greater structural variation
+                            among generated programs, supporting curiosity as a complementary exploration signal for learning in
+                            open-ended discovery.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== METHOD ==================== -->
+    <section class="section is-band" id="method">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <p class="eyebrow">How It Works</p>
+                    <h2 class="title is-3">A Curiosity Signal Inside the Discovery Loop</h2>
+                    <div class="content has-text-justified" style="margin-top: 1rem;">
+                        <p>
+                            CURIO follows the test-time RL discovery loop: a policy expands parents from an archive into rollouts, an
+                            evaluator scores them, the archive keeps the better solutions, and the policy is updated on the same problem.
+                            On top of the task reward, CURIO learns <em>where the policy is surprising itself</em> and rewards
+                            exploration exactly there.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <figure class="figure-card">
+                <img src="./static/images/main.png" alt="CURIO overview: the test-time discovery loop on the left; on the right, (i) tokens outside the policy's top-k are selected as branch points, (ii) an Intrinsic Curiosity World Model learns to predict the next hidden state, and (iii) its prediction error becomes a curiosity bonus added to the task coefficient.">
+                <figcaption>
+                    <strong>Overview of CURIO.</strong> A policy expands archive parents into rollouts. The ICWM learns token-level
+                    transitions in encoded policy hidden states, and its prediction residual informs the curiosity bonus. The signal
+                    is retained at sampled tokens outside the policy's top-$k$ choices and combined with the task coefficient,
+                    $\tilde A_t = \mathrm{sg}[A_t + \eta_\tau b_t]$.
+                </figcaption>
+            </figure>
+
+            <div class="pillar-grid">
+                <div class="pillar-card">
+                    <div class="pillar-icon"><i class="fas fa-code-branch"></i></div>
+                    <div class="pillar-title">(i) Find Branch Points</div>
+                    <p class="pillar-text">
+                        During generation, CURIO records which sampled tokens fall outside the policy's top-$k$ choices. These
+                        departures from the most likely continuation are the only places where the curiosity bonus is applied.
+                    </p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon"><i class="fas fa-brain"></i></div>
+                    <div class="pillar-title">(ii) Learn an Intrinsic Curiosity World Model</div>
+                    <p class="pillar-text">
+                        An encoder and forward predictor learn $s_t, a_t \rightarrow s_{t+1}$ over the <em>current</em> actor's
+                        last-layer hidden states and token embeddings. Its prediction error marks transitions the policy has not yet
+                        learned to anticipate.
+                    </p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon"><i class="fas fa-lightbulb"></i></div>
+                    <div class="pillar-title">(iii) Reward Novelty, Then Anneal</div>
+                    <p class="pillar-text">
+                        Residuals are normalized per epoch and added to the task coefficient with weight $\eta_\tau$, cosine-annealed
+                        to a floor. Setting $\eta_0 = 0$ recovers the task-only TTT-Discover update exactly.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MAIN RESULTS ==================== -->
+    <section class="section" id="results">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <p class="eyebrow">Main Results</p>
+                    <h2 class="title is-3">Better Discoveries at Every Scale</h2>
+                    <div class="content has-text-justified" style="margin-top: 1rem;">
+                        <p>
+                            We compare against frozen-LLM search (AlphaEvolve via OpenEvolve, ShinkaEvolve, Best-of-25600, SimpleTES)
+                            and trainable test-time RL (ThetaEvolve, TTT-Discover). TTT-Discover is the matched task-only control: the
+                            same procedure as CURIO with $\eta_0 = 0$. All results are means over three runs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="title is-5 has-text-centered" style="margin-top: 1rem;">Mathematical Discovery</h3>
+            <div class="table-wrap">
+                <table class="results-table">
+                    <thead>
+                        <tr><th class="name">Method</th><th>Erd&#337;s &darr;</th><th>AC1 &darr;</th><th>AC2 &uarr;</th><th>AC3 &darr;</th><th>Circle Packing &uarr;</th><th>Hadamard &uarr;</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="group-row"><td colspan="7">Qwen3-8B</td></tr>
+                        <tr><td class="name">AlphaEvolve</td><td>0.381002</td><td>1.50561</td><td>0.8947</td><td>1.5062</td><td>2.63585</td><td>0.5589</td></tr>
+                        <tr><td class="name">ThetaEvolve</td><td>0.380999</td><td>1.50649</td><td>0.9449</td><td>1.4942</td><td class="second">2.63597</td><td>0.5748</td></tr>
+                        <tr><td class="name">ShinkaEvolve</td><td>0.381026</td><td>1.51493</td><td>0.8501</td><td>1.5074</td><td class="second">2.63597</td><td>0.5661</td></tr>
+                        <tr><td class="name">Best-of-25600</td><td>0.381091</td><td>1.51032</td><td>0.9318</td><td>1.5081</td><td>2.63570</td><td>0.5554</td></tr>
+                        <tr><td class="name">SimpleTES</td><td>0.381006</td><td>1.50628</td><td>0.9458</td><td>1.4951</td><td class="second">2.63597</td><td>0.5776</td></tr>
+                        <tr><td class="name">TTT-Discover</td><td class="second">0.380995</td><td class="second">1.50546</td><td class="second">0.9463</td><td class="second">1.4935</td><td class="best">2.63598</td><td class="second">0.5809</td></tr>
+                        <tr class="row-ours"><td class="name"><strong>CURIO</strong></td><td class="best">0.380932</td><td class="best">1.50513</td><td class="best">0.9481</td><td class="best">1.4846</td><td class="best">2.63598</td><td class="best">0.6048</td></tr>
+                        <tr class="group-row"><td colspan="7">Qwen3-14B</td></tr>
+                        <tr><td class="name">AlphaEvolve</td><td>0.381068</td><td>1.50971</td><td>0.9158</td><td>1.5109</td><td>2.63482</td><td>0.5762</td></tr>
+                        <tr><td class="name">ThetaEvolve</td><td>0.383710</td><td>1.51488</td><td>0.9351</td><td>1.6428</td><td>2.62491</td><td>0.5867</td></tr>
+                        <tr><td class="name">ShinkaEvolve</td><td>0.381041</td><td>1.51052</td><td>0.9048</td><td>1.4996</td><td>2.63509</td><td>0.5826</td></tr>
+                        <tr><td class="name">Best-of-25600</td><td>0.381119</td><td>1.50997</td><td>0.9271</td><td>1.5051</td><td>2.63439</td><td>0.5708</td></tr>
+                        <tr><td class="name">SimpleTES</td><td>0.381009</td><td>1.50819</td><td>0.9374</td><td>1.4879</td><td class="second">2.63546</td><td class="second">0.5902</td></tr>
+                        <tr><td class="name">TTT-Discover</td><td class="second">0.380979</td><td class="second">1.50608</td><td class="second">0.9391</td><td class="second">1.4592</td><td class="best">2.63598</td><td>0.5864</td></tr>
+                        <tr class="row-ours"><td class="name"><strong>CURIO</strong></td><td class="best">0.380919</td><td class="best">1.50591</td><td class="best">0.9418</td><td class="best">1.4578</td><td class="best">2.63598</td><td class="best">0.6061</td></tr>
+                        <tr class="group-row"><td colspan="7">Qwen3-235B</td></tr>
+                        <tr><td class="name">TTT-Discover</td><td class="second">0.380918</td><td class="second">1.50376</td><td class="second">0.9562</td><td class="second">1.4561</td><td class="best">2.63598</td><td class="second">0.7846</td></tr>
+                        <tr class="row-ours"><td class="name"><strong>CURIO</strong></td><td class="best">0.380880</td><td class="best">1.50315</td><td class="best">0.9588</td><td class="best">1.4549</td><td class="best">2.63598</td><td class="best">0.9284</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-note">
+                Best feasible objective found per run, averaged over three runs. &darr; lower is better, &uarr; higher is better.
+                Within each scale, <strong>bold</strong> is best and <u>underline</u> is second-best; ties share the marking.
+            </p>
+
+            <h3 class="title is-5 has-text-centered" style="margin-top: 2.5rem;">Single-Cell Denoising</h3>
+            <div class="table-wrap">
+                <table class="results-table">
+                    <thead>
+                        <tr><th class="name" rowspan="2">Method</th><th class="spans" colspan="3">PBMC</th><th class="spans group-start" colspan="3">Tabula</th></tr>
+                        <tr><th>Score &uarr;</th><th>MSE &darr;</th><th>Poisson &darr;</th><th class="group-start">Score &uarr;</th><th>MSE &darr;</th><th>Poisson &darr;</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="group-row"><td colspan="7">Qwen3-8B</td></tr>
+                        <tr><td class="name">AlphaEvolve</td><td>0.6738</td><td>0.1817</td><td>0.0554</td><td class="group-start">0.6785</td><td>0.1716</td><td>0.0323</td></tr>
+                        <tr><td class="name">ThetaEvolve</td><td class="second">0.6981</td><td class="second">0.1588</td><td class="second">0.0494</td><td class="group-start best">0.7207</td><td class="best">0.1441</td><td class="second">0.0302</td></tr>
+                        <tr><td class="name">ShinkaEvolve</td><td>0.6787</td><td>0.1764</td><td>0.0535</td><td class="group-start">0.6881</td><td>0.1669</td><td>0.0312</td></tr>
+                        <tr><td class="name">Best-of-25600</td><td>0.6274</td><td>0.2071</td><td>0.0607</td><td class="group-start">0.6382</td><td>0.1968</td><td>0.0354</td></tr>
+                        <tr><td class="name">SimpleTES</td><td>0.6958</td><td>0.1641</td><td>0.0503</td><td class="group-start">0.7118</td><td>0.1514</td><td>0.0305</td></tr>
+                        <tr><td class="name">TTT-Discover</td><td>0.6842</td><td>0.2087</td><td>0.0818</td><td class="group-start">0.6468</td><td>0.1963</td><td>0.0363</td></tr>
+                        <tr class="row-ours"><td class="name"><strong>CURIO</strong></td><td class="best">0.7009</td><td class="best">0.1552</td><td class="best">0.0493</td><td class="group-start second">0.7165</td><td class="second">0.1485</td><td class="best">0.0301</td></tr>
+                        <tr class="group-row"><td colspan="7">Qwen3-14B</td></tr>
+                        <tr><td class="name">AlphaEvolve</td><td>0.6684</td><td>0.1821</td><td>0.0504</td><td class="group-start">0.6586</td><td>0.1824</td><td>0.0302</td></tr>
+                        <tr><td class="name">ThetaEvolve</td><td>0.6814</td><td>0.1678</td><td>0.0503</td><td class="group-start">0.6892</td><td>0.1586</td><td>0.0302</td></tr>
+                        <tr><td class="name">ShinkaEvolve</td><td>0.6782</td><td>0.1715</td><td>0.0502</td><td class="group-start">0.6783</td><td>0.1618</td><td class="second">0.0301</td></tr>
+                        <tr><td class="name">Best-of-25600</td><td>0.6171</td><td>0.2023</td><td>0.0506</td><td class="group-start">0.6576</td><td>0.1822</td><td>0.0303</td></tr>
+                        <tr><td class="name">SimpleTES</td><td>0.6873</td><td>0.1651</td><td>0.0499</td><td class="group-start">0.6966</td><td>0.1558</td><td>0.0302</td></tr>
+                        <tr><td class="name">TTT-Discover</td><td class="second">0.6901</td><td class="second">0.1615</td><td class="second">0.0492</td><td class="group-start second">0.7012</td><td class="second">0.1526</td><td class="second">0.0301</td></tr>
+                        <tr class="row-ours"><td class="name"><strong>CURIO</strong></td><td class="best">0.7052</td><td class="best">0.1555</td><td class="best">0.0491</td><td class="group-start best">0.7218</td><td class="best">0.1423</td><td class="best">0.0292</td></tr>
+                        <tr class="group-row"><td colspan="7">Qwen3-235B</td></tr>
+                        <tr><td class="name">TTT-Discover</td><td class="second">0.7011</td><td class="second">0.1562</td><td class="second">0.0491</td><td class="group-start second">0.7254</td><td class="second">0.1401</td><td class="second">0.0291</td></tr>
+                        <tr class="row-ours"><td class="name"><strong>CURIO</strong></td><td class="best">0.7156</td><td class="best">0.1501</td><td class="best">0.0490</td><td class="group-start best">0.7408</td><td class="best">0.1334</td><td class="best">0.0281</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-note">
+                The epoch is selected by held-in MSE; neither held-out corpus is used for selection. Means over three runs.
+            </p>
+
+            <div class="columns is-centered">
+                <div class="column is-four-fifths">
+                    <div class="takeaway">
+                        <span class="takeaway-icon"><i class="fas fa-circle-check"></i></span>
+                        <p>
+                            CURIO improves on TTT-Discover for Erd&#337;s, AC1&ndash;AC3, and Hadamard at every tested scale, matches
+                            the best reported performance on Circle Packing, and improves denoising Score and MSE on both held-out
+                            corpora. The largest gain is on Hadamard at 235B (<strong>+18.3%</strong>).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== DIVERSITY ==================== -->
+    <section class="section is-band" id="diversity">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <p class="eyebrow">Analysis</p>
+                    <h2 class="title is-3">More Structurally Diverse Programs</h2>
+                    <div class="content has-text-justified" style="margin-top: 1rem;">
+                        <p>
+                            We measure code-level structural variation among generated programs with OpenEvolve's island code-diversity
+                            metric, which compares pairs of programs by differences in code length, line count, and character sets.
+                            CURIO generally maintains higher diversity than TTT-Discover over training. This is a code-level diagnostic:
+                            it does not by itself establish semantic diversity of the underlying constructions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <figure class="figure-card is-narrow">
+                <img src="./static/images/diversity_stage_heatmap.png" alt="Heatmap of code diversity by training stage for Erdős and Circle Packing; CURIO is higher than TTT-Discover in the early, middle, late, and final stages.">
+                <figcaption>
+                    <strong>Code diversity by training stage.</strong> On Erd&#337;s and Circle Packing, CURIO has higher code
+                    diversity than task-only RL (TTT-Discover) in every stage: early (epochs 0&ndash;12), middle (13&ndash;25),
+                    late (26&ndash;38), and final (39&ndash;49).
+                </figcaption>
+            </figure>
+
+            <div class="figure-grid cols-3">
+                <figure class="figure-card"><img src="./static/images/erdos_diversity.png" alt="Code diversity over epochs on Erdős"><figcaption>Erd&#337;s</figcaption></figure>
+                <figure class="figure-card"><img src="./static/images/ac1_diversity.png" alt="Code diversity over epochs on AC1"><figcaption>AC1</figcaption></figure>
+                <figure class="figure-card"><img src="./static/images/ac2_diversity.png" alt="Code diversity over epochs on AC2"><figcaption>AC2</figcaption></figure>
+                <figure class="figure-card"><img src="./static/images/ac3_diversity.png" alt="Code diversity over epochs on AC3"><figcaption>AC3</figcaption></figure>
+                <figure class="figure-card"><img src="./static/images/circle_packing_diversity.png" alt="Code diversity over epochs on Circle Packing"><figcaption>Circle Packing</figcaption></figure>
+                <figure class="figure-card"><img src="./static/images/hadamardmatrix_diversity.png" alt="Code diversity over epochs on HadamardMatrix"><figcaption>HadamardMatrix</figcaption></figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ABLATIONS ==================== -->
+    <section class="section" id="ablations">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <p class="eyebrow">Ablations</p>
+                    <h2 class="title is-3">What Makes the Curiosity Signal Work</h2>
+                    <div class="content has-text-justified" style="margin-top: 1rem;">
+                        <p>
+                            On Qwen3-14B across six tasks, we vary three design choices of the ICWM. Each panel fixes its reference
+                            configuration at 50 on every task, so values above 50 indicate improvement and values below 50 indicate
+                            degradation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="figure-grid cols-3">
+                <figure class="figure-card">
+                    <img src="./static/images/hyper_curiosity_radar.png" alt="Radar chart comparing curiosity weights 0, 0.3, 0.5 and 0.8 across six tasks">
+                    <figcaption>(a) Curiosity weight $\eta_0$</figcaption>
+                </figure>
+                <figure class="figure-card">
+                    <img src="./static/images/structure_world_model_radar.png" alt="Radar chart comparing MLP, GRU and Transformer forward predictors across six tasks">
+                    <figcaption>(b) ICWM predictor architecture</figcaption>
+                </figure>
+                <figure class="figure-card">
+                    <img src="./static/images/independence_curiosity_repr_radar.png" alt="Radar chart comparing coupled, frozen-actor and frozen external-LLM representations across six tasks">
+                    <figcaption>(c) Curiosity representation</figcaption>
+                </figure>
+            </div>
+
+            <div class="pillar-grid">
+                <div class="pillar-card">
+                    <div class="pillar-title">Curiosity strength matters</div>
+                    <p class="pillar-text">
+                        $\eta_0 = 0.3$ is best on the autocorrelation tasks and $\eta_0 = 0.5$ on Erd&#337;s, Hadamard, and
+                        denoising. The largest weight, $0.8$, underperforms the task-only control on some tasks.
+                    </p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-title">A simple MLP predictor is enough</div>
+                    <p class="pillar-text">
+                        The default MLP forward predictor is competitive with GRU and Transformer alternatives; the best
+                        architecture depends on the task.
+                    </p>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-title">Coupling to the evolving policy helps</div>
+                    <p class="pillar-text">
+                        Reading states from the current actor leads on most tasks, compared with a frozen initial actor or a
+                        frozen external LLM.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CODE ==================== -->
+    <section class="section is-band" id="code">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <p class="eyebrow">Get Started</p>
+                    <h2 class="title is-3">Run CURIO on Your Own GPUs</h2>
+                    <div class="content has-text-justified" style="margin-top: 1rem;">
+                        <p>
+                            CURIO runs fully locally: generation on Ray Data LLM (vLLM) and LoRA training on DeepSpeed, with
+                            resumable per-stage checkpoints and launchers for single nodes and SLURM clusters. See the
+                            <a href="https://github.com/ft2023/CURIO" target="_blank">repository</a> for setup, the required Ray
+                            patch, and all configuration options.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-centered">
+                <div class="column is-four-fifths">
+                    <div class="code-card">
+                        <pre><code>git clone https://github.com/ft2023/CURIO.git &amp;&amp; cd CURIO
+source .venvs/curio-runtime/bin/activate
+
+export CURIO_ERDOS_CONFIG=qwen3_8b_2xH100
+export CURIO_EVAL_PYTHON=$PWD/.venvs/curio-eval-erdos/bin/python
+export CURIO_LOG_ROOT=/path/to/your/log/root
+
+bash tasks/erdos/launchers/single_node/run_all.sh</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== BIBTEX ==================== -->
+    <section class="section" id="BibTeX">
+        <div class="container is-max-desktop content">
+            <h2 class="title">BibTeX</h2>
+            <pre><code>@article{feng2026curio,
+  title   = {CURIO: Curiosity-Driven Test-Time Learning for Open-Ended Discovery},
+  author  = {Feng, Tao and Yu, Fangxu and Lei, Zijie and Zou, Jiaru and Jiang, Changjiang and Yan, Yi and You, Jiaxuan and Lu, Pan},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</code></pre>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>
+                    Website template adapted from <a href="https://scientist-two.github.io/" target="_blank">ScientistTwo</a>
+                    and <a href="https://nerfies.github.io/" target="_blank">Nerfies</a>.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

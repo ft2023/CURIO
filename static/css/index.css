@@ -1,0 +1,356 @@
+/* ================================
+   CURIO project page
+   Built on Bulma; layout and components adapted from the
+   ScientistTwo project page (Apache-2.0, see static/TEMPLATE-LICENSE.txt).
+   ================================ */
+
+:root {
+    --accent: #3273dc;
+    --accent-soft: #eef4fd;
+    --ink: #363636;
+    --ink-2: #4a4a4a;
+    --muted: #777;
+    --faint: #999;
+    --line: #ececec;
+    --band: #fafafa;
+    --primary-dark: #2c3e50;
+}
+
+body {
+    font-family: 'Google Sans', 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #fff;
+    color: var(--ink-2);
+}
+
+html { scroll-behavior: smooth; }
+section[id] { scroll-margin-top: 3.5rem; }
+
+::selection { background-color: var(--accent); color: #fff; }
+
+/* ---------- Hero ---------- */
+.hero-body { animation: fadeInUp 0.6s ease-out; }
+
+.hero-banner {
+    display: block;
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto 1.25rem;
+}
+
+.publication-title {
+    font-weight: 600;
+    line-height: 1.3;
+}
+.publication-title .method { color: var(--accent); }
+
+.publication-authors { line-height: 1.8; font-weight: 400; }
+.author-block { display: inline-block; margin: 0 8px; }
+.author-block sup { margin-left: 2px; }
+.affiliations { color: var(--muted); }
+
+.publication-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+.link-block { display: inline-block; }
+
+.button.is-dark {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.button.is-dark:hover {
+    background-color: #34495e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+.button.is-dark[disabled] { opacity: 0.55; }
+
+/* ---------- Headline stats ---------- */
+.stat-ribbon {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin: 1.75rem auto 0;
+    max-width: 880px;
+}
+.stat-ribbon .stat-cell {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    padding: 0.85rem 0.6rem;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.stat-ribbon .stat-cell:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+}
+.stat-ribbon .stat-num {
+    font-size: 1.7rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--accent);
+}
+.stat-ribbon .stat-cap {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--faint);
+    margin-top: 0.3rem;
+}
+.stat-ribbon .stat-foot {
+    font-size: 0.68rem;
+    line-height: 1.35;
+    color: #aaa;
+    margin-top: 0.35rem;
+}
+
+/* ---------- Sticky section nav ---------- */
+.section-nav {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(180%) blur(10px);
+    border-bottom: 1px solid var(--line);
+}
+.section-nav .nav-inner {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    padding: 0.5rem 1rem;
+}
+.section-nav a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #888;
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.15s;
+}
+.section-nav a:hover { background: #f0f4fa; color: var(--accent); }
+
+/* ---------- Sections ---------- */
+.section { padding: 3rem 1.5rem; }
+.section.is-band { background-color: var(--band); }
+
+.eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+}
+
+.content.has-text-justified p {
+    text-align: justify;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+/* ---------- Figure cards ---------- */
+.figure-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    margin: 1.5rem 0 0;
+}
+.figure-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.figure-card.is-narrow { max-width: 620px; margin-left: auto; margin-right: auto; }
+.figure-card figcaption {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-top: 0.85rem;
+    text-align: left;
+}
+.figure-card figcaption strong { color: #555; }
+
+/* Small multiples (diversity curves, ablation radars) */
+.figure-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.figure-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.figure-grid .figure-card { margin: 0; padding: 0.8rem; }
+.figure-grid .figure-card figcaption {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: #555;
+}
+
+/* ---------- Pillar cards ---------- */
+.pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1.75rem;
+}
+.pillar-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    text-align: left;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.pillar-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+}
+.pillar-card .pillar-icon { color: var(--accent); font-size: 1.1rem; margin-bottom: 0.5rem; }
+.pillar-card .pillar-title { font-weight: 700; color: var(--ink); font-size: 0.95rem; margin-bottom: 0.4rem; }
+.pillar-card .pillar-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+/* ---------- Results tables ---------- */
+.table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.25rem;
+    margin-top: 1.5rem;
+}
+.results-table {
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.85rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+.results-table tr th, .results-table tr td {
+    padding: 8px 14px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid #dbdbdb;
+}
+.results-table thead th { background-color: #f5f5f5; font-weight: 600; color: #555; }
+.results-table thead tr:first-child th:first-child { border-top-left-radius: 10px; }
+.results-table thead tr:first-child th:last-child { border-top-right-radius: 10px; }
+.results-table tbody tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+.results-table tbody tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+.results-table tbody tr:last-child td { border-bottom: none; }
+.results-table thead th.spans {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+.results-table td.name, .results-table th.name { text-align: left; }
+.results-table tr .group-start { border-left: 1px solid var(--line); }
+.results-table .group-row td {
+    text-align: left;
+    background: #fbfbfb;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #a0a0a0;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+}
+.results-table .row-ours { background-color: var(--accent-soft); }
+.results-table .row-ours td { color: #1c4f9c; }
+.results-table .best { font-weight: 700; }
+.results-table .second { text-decoration: underline; text-underline-offset: 3px; }
+.table-note {
+    font-size: 0.8rem;
+    color: var(--faint);
+    line-height: 1.55;
+    margin-top: 0.9rem;
+    text-align: center;
+}
+
+/* ---------- Takeaway callout ---------- */
+.takeaway {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin-top: 1.5rem;
+    text-align: left;
+}
+.takeaway .takeaway-icon { color: var(--accent); margin-top: 0.15rem; }
+.takeaway p { margin: 0; font-size: 0.9rem; color: var(--ink-2); line-height: 1.6; }
+
+/* ---------- Code blocks ---------- */
+.code-card pre,
+#BibTeX pre {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    text-align: left;
+}
+.code-card pre code,
+#BibTeX pre code { background-color: transparent; color: inherit; padding: 0; }
+.code-card { margin-top: 1.5rem; }
+.copy-button { position: absolute; top: 10px; right: 10px; z-index: 10; }
+
+/* ---------- Footer ---------- */
+.footer { background-color: var(--band); padding: 3rem 1.5rem 2rem; }
+.footer a { color: var(--accent); }
+
+/* ---------- Responsive ---------- */
+@media screen and (max-width: 768px) {
+    .publication-title span { font-size: 1.5rem !important; }
+    .stat-ribbon { grid-template-columns: repeat(2, 1fr); }
+    .stat-ribbon .stat-num { font-size: 1.4rem; }
+    .figure-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+    #ablations .figure-grid.cols-3 { grid-template-columns: 1fr; }
+    .section-nav .nav-inner {
+        gap: 0;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        scrollbar-width: none;
+    }
+    .section-nav .nav-inner::-webkit-scrollbar { display: none; }
+    .section-nav a { font-size: 0.68rem; padding: 0.3rem 0.5rem; }
+    .results-table .name {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background: #fff;
+        border-right: 1px solid var(--line);
+    }
+    .results-table thead .name { background: #f5f5f5; }
+    .results-table .row-ours .name { background: var(--accent-soft); }
+    .content.has-text-justified p { font-size: 1rem; text-align: left; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
